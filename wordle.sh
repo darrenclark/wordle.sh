@@ -24,6 +24,13 @@ answer="$(grep '^[a-z]\{'"$length"'\}$' $words | shuf -n 1)"
 padding="            "
 prompt="$length letters > "
 
+function give_up() {
+	echo -e "\n\nYou gave up.  The word was:  $answer"
+	exit
+}
+
+trap give_up SIGINT
+
 function is_word() {
 	grep '^'"$1"'$' $words > /dev/null
 }
